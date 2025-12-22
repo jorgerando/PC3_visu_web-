@@ -2,18 +2,12 @@ import streamlit as st
 import pandas as pd
 import plotly.express as px
 
-# -----------------------------------------------------------------------------
-# 1. CONFIGURACIÓN DE PÁGINA
-# -----------------------------------------------------------------------------
 st.set_page_config(
     page_title="El Huésped Fantasma",
     page_icon="👻",
     layout="wide"
 )
 
-# -----------------------------------------------------------------------------
-# 2. ESTILO CSS "GRAND LUXE"
-# -----------------------------------------------------------------------------
 st.markdown("""
     <style>
     /* Importamos fuentes elegantes */
@@ -80,9 +74,18 @@ st.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# -----------------------------------------------------------------------------
-# 3. CARGA DE DATOS
-# -----------------------------------------------------------------------------
+
+import os
+from PIL import Image
+import streamlit as st
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+img_city = Image.open(os.path.join(BASE_DIR, "FantasmaVerano.png"))
+img_resort = Image.open(os.path.join(BASE_DIR, "FantasmaUrbano.png"))
+
+
+
 @st.cache_data
 def load_data():
     return pd.read_csv("hotel_bookings.csv")
@@ -92,13 +95,9 @@ try:
 except FileNotFoundError:
     df = pd.DataFrame({'hotel': ['City Hotel']*79330 + ['Resort Hotel']*40060})
 
-# -----------------------------------------------------------------------------
-# 4. PORTADA E INTRODUCCIÓN
-# -----------------------------------------------------------------------------
-
 st.markdown("<p style='text-align: center; color: #888; font-family: sans-serif; letter-spacing: 3px; font-size: 14px; margin-bottom:0;'>Por Jorge Rando Hernández</p>", unsafe_allow_html=True)
 
-st.markdown('<h1 class="main-title">EL PROBLEMA DEL<br>HUÉSPED FANTASMA</h1>', unsafe_allow_html=True)
+st.markdown('<h1 class="main-title">EL PROBLEMA DEL<br>HUÉSPED FANTASMA </h1>', unsafe_allow_html=True)
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
@@ -115,19 +114,10 @@ st.markdown("""
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
-# -----------------------------------------------------------------------------
-# 5. SECCIÓN: PERSONAJES
-# -----------------------------------------------------------------------------
-
-# Título en negro (definido en CSS)
 st.header("Las Víctimas del Huésped Fantasma")
 
-
-# Preparación de datos
 conteo_hoteles = df['hotel'].value_counts().reset_index()
 conteo_hoteles.columns = ['Hotel', 'Reservas']
-
-# --- LAYOUT ---
 
 st.markdown("""
 <div class="narrative-text">
@@ -149,7 +139,6 @@ with col_real1:
 </a>
 <hr style="margin: 15px 0; border-color: #ddd;">
 <p style="font-size: 40px !important; line-height: 1.5; color: #2c3e50;">
-<b>Perfil del huésped habitual:</b><br>
 Este gigante de cristal y acero, situado en el moderno <i>Parque das Nações</i>, es el hogar de las prisas. Sus pasillos son transitados principalmente por <b>ejecutivos de negocios</b> con agendas apretadas, <b>asistentes a congresos</b> internacionales y viajeros urbanos en escapadas cortas de fin de semana.
 </p>
 <p style="font-size: 40px !important; line-height: 1.5; color: #2c3e50;">
@@ -167,7 +156,6 @@ with col_real2:
 </a>
 <hr style="margin: 15px 0; border-color: #ddd;">
 <p style="font-size: 40px !important; line-height: 1.5; color: #2c3e50;">
-<b>Perfil del huésped habitual:</b><br>
 Un oasis de 5 estrellas en el Algarve, anclado entre la playa dorada y el puerto deportivo. Es el territorio sagrado del descanso para <b>familias enteras en verano</b>, parejas en <b>luna de miel</b> y turistas del norte de Europa que buscan golf y sol durante largas estancias.
 </p>
 <p style="font-size: 40px !important; line-height: 1.5; color: #2c3e50;">
@@ -679,6 +667,37 @@ def create_radar_profile(stats, title_color):
 # --- LAYOUT DE FICHAS CRIMINALES ---
 col1, col2 = st.columns(2)
 
+# --- TRUCO CSS MEJORADO: CENTRADO + MARCO BONITO ---
+st.markdown("""
+<style>
+/* Esto asegura que el contenedor de la imagen ocupe todo el ancho para poder centrar */
+div[data-testid="stImage"] {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+
+/* ESTILOS DEL MARCO DE LA IMAGEN */
+div[data-testid="stImage"] > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    /* Bordes redondeados suaves */
+    border-radius: 15px;
+    /* Marco gris claro sutil (coherente con el tema) */
+    border: 4px solid #f8f9fa;
+    /* Sombra suave para dar profundidad (efecto "foto pegada") */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    /* Pequeño espacio interno entre la foto y el marco */
+    padding: 2px;
+    /* Color de fondo blanco para el pequeño espacio del padding */
+    background-color: white;
+}
+</style>
+""", unsafe_allow_html=True)
+# ----------------------------------------------------------
+
 # === FICHA 1: CITY HOTEL ===
 with col1:
     with st.container(border=True):
@@ -690,17 +709,18 @@ with col1:
         </div>
         """, unsafe_allow_html=True)
 
-        # Descripción Mejorada
-        st.markdown("""
-        **🏨 Escenario:** City Hotel (Lisboa)
-        <br>**⚠️ Nivel de Riesgo:** EXTREMO
+        # IMAGEN (El CSS de arriba la centra y le pone el marco automáticamente)
+        # Ajusta el width si lo quieres más grande o pequeño
+        st.image(img_resort, width=350)
 
+        # Descripción
+        st.markdown("""
         **📋 PERFIL PSICOLÓGICO:**
         Es un viajero profesional o corporativo que juega con el sistema.
 
-        * **El Bloqueador:** Utiliza canales Offline o de Grupo para bloquear habitaciones "por si acaso" se celebra un evento o conferencia.
-        * **Sin Ataduras:** Al no llevar coche (**Pista 4**), no tiene compromiso logístico. Depende de vuelos o trenes que, si fallan, provocan la cancelación inmediata.
-        * **Reincidente:** Su historial (**Pista 6**) le delata. Ya ha cancelado antes; para él, cancelar es parte de su gestión de agenda, no un accidente.
+        * **El Bloqueador:** Utiliza canales Offline o de Grupo para bloquear habitaciones "por si acaso".
+        * **Sin Ataduras:** Al no llevar coche (**Pista 4**), no tiene compromiso logístico. Depende de vuelos o trenes.
+        * **Reincidente:** Su historial (**Pista 6**) le delata. Ya ha cancelado antes.
         """, unsafe_allow_html=True)
 
         # Gráfico
@@ -726,17 +746,17 @@ with col2:
         </div>
         """, unsafe_allow_html=True)
 
-        # Descripción Mejorada
-        st.markdown("""
-        **🏖️ Escenario:** Resort Hotel (Algarve)
-        <br>**⚠️ Nivel de Riesgo:** ALTO
+        # IMAGEN (El CSS de arriba la centra y le pone el marco automáticamente)
+        st.image(img_city, width=350)
 
+        # Descripción
+        st.markdown("""
         **📋 PERFIL PSICOLÓGICO:**
         Turista nacional que busca seguridad a bajo coste, pero con cero compromiso.
 
-        * **El Previsor Indeciso:** Reserva en Enero para Agosto (**Pista 2**) buscando precio, pero sigue buscando ofertas mejores hasta el último día.
-        * **Factor Local:** Su talón de Aquiles es su origen (**Pista 5**). Al ser portugués, no tiene billetes de avión que perder. Cancelar el hotel le sale "gratis" emocionalmente.
-        * **Volátil:** Usa el hotel como un "Plan B". Si hace mal tiempo o un amigo le presta una casa, cancelará sin dudarlo.
+        * **El Previsor Indeciso:** Reserva en Enero para Agosto (**Pista 2**) buscando precio.
+        * **Factor Local:** Su talón de Aquiles es su origen (**Pista 5**). Al ser portugués, cancelar no le cuesta vuelos.
+        * **Volátil:** Usa el hotel como un "Plan B". Si hace mal tiempo, cancelará.
         """, unsafe_allow_html=True)
 
         # Gráfico
