@@ -108,13 +108,13 @@ st.markdown("""
     Pero llega el día... y el lobby está vacío; nadie ha venido. ¡¿Qué ha ocurrido?!
     <br><br>
     Aunque esta situación pueda parecer digna del inicio de una novela de terror, es un fenómeno real que experimentan gran cantidad de hoteles.
-    Entender las razones por las que los huéspedes cancelan sus reservas a última hora puede suponer la diferencia entre un negocio próspero y la más absoluta <b>quiebra</b>.
+    Entender las razones por las que los huéspedes cancelan sus reservas puede suponer la diferencia entre un negocio próspero y la más absoluta <b>quiebra</b>.
 </div>
 """, unsafe_allow_html=True)
 
 st.markdown("<hr>", unsafe_allow_html=True)
 
-st.header("Las Víctimas del Huésped Fantasma")
+st.header("Las Víctimas del Huésped Fantasma 💀 ")
 
 conteo_hoteles = df['hotel'].value_counts().reset_index()
 conteo_hoteles.columns = ['Hotel', 'Reservas']
@@ -168,10 +168,10 @@ st.markdown("<hr>", unsafe_allow_html=True)
 
 st.markdown("""
 <div class="narrative-text">
-    Al analizar sus constantes vitales (sus ingresos), descubrimos dos patologías muy diferentes:
+    Al analizar sus constantes sus ingresos, descubrimos dos comportamientos muy diferentes:
     <ul>
-        <li><b>El Resort (Línea Turquesa):</b> Sufre una <b>estacionalidad extrema</b>. Vive por y para el verano. Fíjate cómo su precio (ADR) se dispara en Julio y Agosto, llegando a triplicar sus tarifas de invierno. Es un negocio de "todo o nada".</li>
-        <li><b>La Ciudad (Línea Salmón):</b> Es el corredor de fondo. Mantiene una constancia durante todo el año, con picos más suaves dictados por eventos o temporadas de negocios (mayo/septiembre).</li>
+        <li><b>El Resort (Línea Azul):</b> Sufre una <b>estacionalidad extrema</b>. Vive por y para el verano. Fíjate cómo su precio (ADR) se dispara en Julio y Agosto, llegando a triplicar sus tarifas de invierno.</li>
+        <li><b>La Ciudad (Línea Roja):</b> Es el corredor de fondo. Mantiene una constancia durante todo el año, con picos más suaves dictados por eventos o temporadas de negocios (mayo/septiembre).</li>
     </ul>
 </div>
 """, unsafe_allow_html=True)
@@ -194,7 +194,6 @@ fig_adr = px.line(
     y='adr',
     color='hotel',
     markers=True,
-    title='Fluctuación del Precio Medio (ADR) a lo largo del año',
     labels={'arrival_date_month': 'Mes', 'adr': 'Precio Medio (€)', 'hotel': 'Tipo de Hotel'},
     color_discrete_map={'City Hotel': '#FF6B6B', 'Resort Hotel': '#4ECDC4'} # Mismos colores que las tarjetas
 )
@@ -209,7 +208,7 @@ st.plotly_chart(fig_adr, use_container_width=True)
 # SECCIÓN 2: LA ESCENA DEL CRIMEN (NORMALIZADO %)
 # -----------------------------------------------------------------------------
 st.markdown("<hr>", unsafe_allow_html=True)
-st.header("La Escena del Crimen: El Impacto Real")
+st.header("La Escena del Crimen 🔎 ")
 
 st.markdown("""
 <div class="narrative-text">
@@ -344,7 +343,16 @@ import numpy as np
 # SECCIÓN 6: LAS PISTAS (NUMERADAS Y SIN ESPACIOS EXTRA)
 # -----------------------------------------------------------------------------
 st.markdown("<hr>", unsafe_allow_html=True)
-st.header("Las Pistas: Perfilando al Sospechoso")
+st.header("Las Pistas: Perfilando al Sospechoso 🧩")
+
+st.markdown("""
+<div class="narrative-text">
+    Para descubrir al fantasma, debemos seguir sus movimientos: dónde y cómo reserva, con cuánta antelación y qué comportamientos son sospechosos.
+    <br><br>
+    Siguiendo el rastro de <b>migas de pan</b> que deja a su paso, presenta las siguientes evidencias:
+</div>
+<br>
+""", unsafe_allow_html=True)
 
 # =============================================================================
 # PISTA 1: EL CANAL (BURBUJAS)
@@ -353,8 +361,6 @@ st.subheader("Pista 1: El Canal de Entrada")
 
 st.markdown("""
 <div class="narrative-text">
-    Para descubrir al fantasma, debemos seguir las pistas que deja.
-    <br>
     En este gráfico analizamos qué tipo de cliente cancela más <b>según el canal que utilizó para reservar</b>.
     <br>
     <i>Pasa el ratón por encima de las burbujas para ver el perfil del huesped.</i>
@@ -493,7 +499,7 @@ st.subheader("Pistas 3 y 4: El Comportamiento")
 
 st.markdown("""
 <div class="narrative-text">
-    Ya tenemos identificado el <b>Quién</b> y el <b>Cuándo</b> parece que ocurren las can.
+    Ya tenemos identificado el <b>Quién</b> y el <b>Cuándo</b> parece que ocurren las cancelaciones.
     <br>
     Ahora analicemos el <b>Qué</b>. Hay dos comportamientos clave que diferencian a un cliente real de uno fantasma:
 </div>
@@ -552,10 +558,9 @@ st.subheader("Pistas 5 y 6: El Contexto")
 
 st.markdown("""
 <div class="narrative-text">
-    El informe forense (análisis en R) nos ha dado una pista crucial sobre el <b>origen</b> de los sospechosos.
-    Además, hemos revisado sus <b>fichas policiales</b> para ver si tienen antecedentes.
+    Por último, hemos detectado una pista crucial sobre el <b>origen</b> de los sospechosos, una marca que casi todos los huéspedes fantasma dejan a su paso.
+    Además, hemos revisado sus <b>fichas policiales</b> para comprobar si tienen antecedentes.
     <br><br>
-    <i>Lo que hemos encontrado confirma nuestras sospechas:</i>
 </div>
 """, unsafe_allow_html=True)
 
@@ -618,11 +623,11 @@ import streamlit as st
 # SECCIÓN 7: DESENMASCARANDO AL FANTASMA (HEXÁGONO DE RIESGO)
 # -----------------------------------------------------------------------------
 st.markdown("<hr>", unsafe_allow_html=True)
-st.header("Desenmascarando al Fantasma")
+st.header("Desenmascarando al Fantasma 🎭")
 
 st.markdown("""
 <div class="narrative-text">
-    La evidencia es concluyente. No nos enfrentamos a un solo enemigo, sino a dos perfiles psicológicos opuestos de pendiendo de la naturaleza de sus estancias.
+    La evidencia es concluyente. No nos enfrentamos a un solo enemigo, sino a dos perfiles opuestos de pendiendo de la naturaleza de sus estancias.
     Hemos generado un <b>retrato robot</b> basado en las 6 pistas clave para identificar sus motivaciones.
 </div>
 <br>
